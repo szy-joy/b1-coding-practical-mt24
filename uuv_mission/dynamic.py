@@ -75,9 +75,26 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        # You are required to implement this method
-        pass
+        reference = []
+        cave_height = []
+        cave_depth = []
 
+        # Open the CSV file and read the data
+        with open(file_name, mode='r') as file:
+            csv_reader = csv.reader(file)
+            next(csv_reader)  # Skip the header row
+            for row in csv_reader:
+                reference.append(float(row[0]))
+                cave_height.append(float(row[1]))
+                cave_depth.append(float(row[2]))
+        
+        # Convert lists to numpy arrays
+        reference = np.array(reference)
+        cave_height = np.array(cave_height)
+        cave_depth = np.array(cave_depth)
+
+        # Return an instance of Mission with the loaded data
+        return cls(reference, cave_height, cave_depth)
 
 class ClosedLoop:
     def __init__(self, plant: Submarine, controller):
